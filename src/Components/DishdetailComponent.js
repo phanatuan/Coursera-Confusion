@@ -51,7 +51,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 				</div>
 			);
 		} else {
-			return <div>Hello</div>
+			return <div></div>
 		}
 	}
 
