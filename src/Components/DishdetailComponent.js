@@ -4,18 +4,19 @@ import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
 
 class Dishdetail extends Component {
-	constructor(props) {
-		super(props); 
-		this.state = { //Declare a state
-			//dishSelect: null
-		}
+	
+	componentDidMount() { 
+		console.log('Dishdetail Component componentDidMount invoked');
+	}
+
+	componentDidUpdate() { 
+		console.log('Dishdetail Component componentDidUpdate invoked');
 	}
 
 	renderDish(dish) { 
-		//console.log(dish) *For Debug
 		return (
 			<Card>
-				<CardImg width='100%' src={	dish.image} alt={dish.name} />
+				<CardImg width='100%' src={dish.image} alt={dish.name} />
 				<CardBody>
 					<CardTitle heading>{dish.name}</CardTitle>
 					<CardText>{dish.description}</CardText>
@@ -26,7 +27,6 @@ class Dishdetail extends Component {
 
 	renderComments(dish) {
 		const comments = dish.comments.map((eachComment) => {
-			//console.log(eachComment.author); *for DEBUG
 			return (
 				<li key={eachComment.id} >
 					<div>{eachComment.author}</div>			
@@ -37,7 +37,7 @@ class Dishdetail extends Component {
 		return (
 			<Card>
 				<h4>Comments</h4>
-				<ul class='list-unstyled'>
+				<ul className='list-unstyled'>
 					{comments}
 				</ul>
 			</Card>
@@ -45,25 +45,26 @@ class Dishdetail extends Component {
 	}
 
 	render () {
-		if (this.props.dishSelect !== null) {
+		console.log('Dishdetail Component Render invoked');
+		// console.log(this.props.dishSelection);
+		if (this.props.dishSelection !== undefined) {
 			return (
 				<div className='container'>
 					<div className='row'>
 						<div className='col-12 col-md-5 m-1'>
-							{this.renderDish(this.props.dishSelect)}
+							{this.renderDish(this.props.dishSelection)}
 						</div>
 					</div>
 					
 					<div className='row'>
 						<div className='col-12 col-md-5 m-1'>
-							{this.renderComments(this.props.dishSelect)}
+							{this.renderComments(this.props.dishSelection)}
 						</div>
 					</div>
 				</div>
-
-		);
+			);
 		} else {
-			return <div></div>
+			return <div>Hello</div>
 		}
 		
 	}
