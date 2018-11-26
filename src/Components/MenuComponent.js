@@ -23,7 +23,7 @@ const Menu = (props) => {
 				<RenderMenuItem dish={dish} />
 			</div>
 		);
-	}); //come back to define later
+	});
 
 	return (
 		<div className = 'container'>
