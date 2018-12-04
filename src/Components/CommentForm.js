@@ -14,7 +14,7 @@ class CommentForm extends Component {
 
 	handleSubmit(values) {
 		console.log(`Current State is ${JSON.stringify(values)}`);
-		alert(`Current State is ${JSON.stringify(values)}`)
+		this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
 	}
 
 	toggle() { 
@@ -45,7 +45,7 @@ class CommentForm extends Component {
 						<FormGroup>
 							<Label>Author</Label>
 							<Control.text model='.author' id='author' 
-											  name='author' placeholder='Author'
+										name='author' placeholder='Author'
                                    className = 'form-control'/> 
 						</FormGroup>
 						

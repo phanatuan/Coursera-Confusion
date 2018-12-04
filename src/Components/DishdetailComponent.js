@@ -15,7 +15,7 @@ import CommentForm from './CommentForm.js';
 		);
 	}
 
-	function RenderComments({comment}) {
+	function RenderComments({comment, addComment, dishId}) {
 		const comments = comment.map((eachComment) => {
 			return (
 				<li key={eachComment.id} >
@@ -29,6 +29,7 @@ import CommentForm from './CommentForm.js';
 				<h4>Comments</h4>
 				<ul className='list-unstyled'>
 					{comments}
+					<CommentForm dishId={dishId} addComment={addComment} /> 
 				</ul>
 			</Card>
 		);
@@ -52,12 +53,11 @@ import CommentForm from './CommentForm.js';
 					<div className='row'>
 						<div className='col-12 col-md-5 m-1'>
 							<RenderDish dish={props.dish}/>
-							<RenderComments comment={props.comments}/>
+							<RenderComments comment={props.comments}
+											addComment = {props.addComment}
+											dishId = {props.dish.id}
+							/>
 						</div>
-					</div>
-
-					<div>
-						<CommentForm /> 
 					</div>
 			
 				</div>
