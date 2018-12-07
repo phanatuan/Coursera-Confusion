@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Label, Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup} from 'reactstrap';
-import { LocalForm, Control, Errors } from 'react-redux-form';
+import { LocalForm, Control } from 'react-redux-form';
 
 class CommentForm extends Component { 
 	constructor(props) { 
