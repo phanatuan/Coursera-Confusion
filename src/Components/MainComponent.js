@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+ import React, { Component } from 'react';
 import Home from './HomeComponent.js';
 import Menu from './MenuComponent';
 import Contact from './ContactComponent.js';
@@ -8,11 +8,11 @@ import Header from './HeaderComponent.js';
 import Footer from './FooterComponent.js';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addComment, fetchDishes } from '../redux/ActionCreators';
+import { addComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
 import { actions } from 'react-redux-form';
 
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     dishes: state.dishes,
     comments: state.comments, 
@@ -21,40 +21,51 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
-  fetchDishes: () => {dispatch(fetchDishes())},
-  resetFeedbackForm: () => {dispatch(actions.reset('feedback'))}
+  fetchDishes: () => dispatch(fetchDishes()),
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos()),
+  resetFeedbackForm: () => { dispatch(actions.reset('feedback'))}
 });
+
 
 class Main extends Component {
 
-  componentDidMount() { 
-    this.props.fetchDishes(); 
+  componentDidMount() {
+    this.props.fetchDishes();
+    this.props.fetchPromos();
+    this.props.fetchComments();
   }
 
   render() {
-
     const DishWithId = ({match}) => {
       return(
           <Dishdetail dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]} 
-            comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
-            addComment={this.props.addComment}
+            comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
             isLoading = {this.props.dishes.isLoading}
             errMess = {this.props.dishes.errMess} 
+            addComment= {this.props.addComment}
+            commentsErrMess = {this.props.comments.errMess} 
           />
       );
     }
 
     const HomePage = () => { 
+      if(this.props.dishes.dishes.length > 0 && this.props.promotions.promotions.length > 0 ) {
       return (
         <Home dish = {this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
               dishesLoading = {this.props.dishes.isLoading}
               dishesErrMess = {this.props.dishes.errMess} 
-              promotion = {this.props.promotions.filter((promotion) => promotion.featured)[0]}
+              promotion = {this.props.promotions.promotions.filter((promo) => promo.featured)[0]}
+              promosLoading = {this.props.promotions.isLoading}
+              promosErrMess = {this.props.promotions.errMess} 
               leader = {this.props.leaders.filter((leader) => leader.featured)[0]}
         />
-      );
+      );          
+      } else {
+        return (<h1> still loading </h1>)
+      }
     }
 
     return (
